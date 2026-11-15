@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Student dashboard for viewing college announcements at Cybernaut Institute of Technology.">
+  <title>Student Dashboard | Cybernaut Institute of Technology</title>
+
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <!-- ===== HEADER SECTION ===== -->
+  <header class="site-header">
+    <a href="index.html" class="logo-link" aria-label="Cybernaut Institute of Technology home">
+      <!-- Replace the placeholder with: <img src="images/logo.png" alt="Cybernaut Institute of Technology logo" width="80" height="80"> -->
+      <span class="logo-placeholder" aria-hidden="true">CIT</span>
+      <span class="college-name">CYBERNAUT INSTITUTE OF TECHNOLOGY</span>
+    </a>
+  </header>
+
+  <!-- ===== NAVIGATION SECTION ===== -->
+  <nav class="main-navigation" aria-label="Main navigation">
+    <a href="index.html">Home</a>
+    <a href="student-dashboard.html" aria-current="page">Student Dashboard</a>
+    <a href="admin-dashboard.html">Admin Dashboard</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <main class="dashboard-main">
+    <!-- ===== WELCOME SECTION ===== -->
+    <section class="dashboard-welcome" aria-labelledby="dashboard-welcome-heading">
+      <h1 id="dashboard-welcome-heading">Student Dashboard</h1>
+      <p class="welcome-message">Welcome back, <span id="student-name">Student</span>! Here are the latest announcements.</p>
+    </section>
+
+    <!-- ===== DASHBOARD NAVIGATION / SEARCH & FILTER ===== -->
+    <section class="dashboard-controls" aria-label="Search and filter announcements">
+      <div class="search-filter-row">
+        <!-- Search bar placeholder (Member 3 will add live filtering) -->
+        <div class="search-group">
+          <label for="search-input">Search announcements</label>
+          <input type="search" id="search-input" placeholder="Search by title or keyword..." autocomplete="off">
+          <!-- FLASK: this input will be used by JS to filter the list client-side; no form submit. -->
+        </div>
+
+        <!-- Category filter dropdown -->
+        <div class="filter-group">
+          <label for="category-filter">Filter by category</label>
+          <select id="category-filter">
+            <option value="all">All Categories</option>
+            <option value="examination">Examination Notifications</option>
+            <option value="circular">College Circulars</option>
+            <option value="events">Events and Workshops</option>
+            <option value="results">Results</option>
+            <option value="placement">Placement Announcements</option>
+          </select>
+        </div>
+
+        <!-- New: Department filter (for Member 3 / integration) -->
+        <div class="filter-group">
+          <label for="department-filter">Filter by department</label>
+          <select id="department-filter">
+            <option value="all">All Departments</option>
+            <option value="IT">IT</option>
+            <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="MECH">Mechanical</option>
+            <option value="Civil">Civil</option>
+            <option value="EEE">EEE</option>
+          </select>
+        </div>
+
+        <!-- New: Year filter (for Member 3 / integration) -->
+        <div class="filter-group">
+          <label for="year-filter">Filter by year</label>
+          <select id="year-filter">
+            <option value="all">All Years</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== ANNOUNCEMENT DISPLAY SECTION ===== -->
+    <section class="announcements-section" aria-labelledby="announcements-heading">
+      <h2 id="announcements-heading">Announcements</h2>
+
+      <!-- FLASK: replace the sample cards below with a loop over all announcements. -->
+      <div id="announcement-list" class="announcement-list">
+        <article class="announcement-card" data-id="1" data-category="examination">
+          <h3 class="announcement-title">Mid-Semester Examination Schedule Released</h3>
+          <p class="announcement-date">15 November 2026</p>
+          <span class="announcement-category">Examination Notifications</span>
+          <p class="announcement-description">Check the detailed timetable for all departments.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="2" data-category="circular">
+          <h3 class="announcement-title">Revised Academic Calendar Notice</h3>
+          <p class="announcement-date">14 November 2026</p>
+          <span class="announcement-category">College Circulars</span>
+          <p class="announcement-description">Please review the updated dates for academic activities.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="3" data-category="events">
+          <h3 class="announcement-title">Annual Technical Symposium Registration Open</h3>
+          <p class="announcement-date">12 November 2026</p>
+          <span class="announcement-category">Events and Workshops</span>
+          <p class="announcement-description">Register your team for workshops, paper presentations, and competitions.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="4" data-category="results">
+          <h3 class="announcement-title">Semester Results Declared</h3>
+          <p class="announcement-date">10 November 2026</p>
+          <span class="announcement-category">Results</span>
+          <p class="announcement-description">Results for all branches are now available on the student portal.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="5" data-category="placement">
+          <h3 class="announcement-title">Placement Drive: TechCorp Solutions</h3>
+          <p class="announcement-date">08 November 2026</p>
+          <span class="announcement-category">Placement Announcements</span>
+          <p class="announcement-description">Eligibility: B.Tech final year, CGPA >= 7.0. Register by 20 Nov.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="6" data-category="examination">
+          <h3 class="announcement-title">Practical Examination Schedule</h3>
+          <p class="announcement-date">05 November 2026</p>
+          <span class="announcement-category">Examination Notifications</span>
+          <p class="announcement-description">Lab practicals begin next week. Check your department notice board.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER SECTION ===== -->
+  <footer class="site-footer">
+    <div>
+      <h2>Cybernaut Institute of Technology</h2>
+      <p>123 Education Road, Knowledge City, India - 000000</p>
+      <p>Phone: +91-00000-00000 | Email: info@cybernaut.edu.in</p>
+    </div>
+    <p>&copy; 2026 Cybernaut Institute of Technology. All rights reserved.</p>
+  </footer>
+</body>
+</html>

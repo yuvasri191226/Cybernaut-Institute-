@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official announcement portal of Cybernaut Institute of Technology.">
+  <title>Home | Cybernaut Institute of Technology</title>
+
+  <!-- All pages share this stylesheet and script. -->
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body>
+  <!-- ===== HEADER SECTION ===== -->
+  <header class="site-header">
+    <a href="index.html" class="logo-link" aria-label="Cybernaut Institute of Technology home">
+      <!-- Replace the placeholder with: <img src="images/logo.png" alt="Cybernaut Institute of Technology logo" width="80" height="80"> -->
+      <span class="logo-placeholder" aria-hidden="true">CIT</span>
+      <span class="college-name">CYBERNAUT INSTITUTE OF TECHNOLOGY</span>
+    </a>
+  </header>
+
+  <!-- ===== NAVIGATION SECTION ===== -->
+  <nav class="main-navigation" aria-label="Main navigation">
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="student-dashboard.html">Student Dashboard</a>
+    <a href="admin-dashboard.html">Admin Dashboard</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <main>
+    <!-- ===== WELCOME SECTION ===== -->
+    <section class="welcome-section" aria-labelledby="welcome-heading">
+      <p class="welcome-label">College Announcement Monitoring System</p>
+      <h1 id="welcome-heading">Welcome to Cybernaut Institute of Technology</h1>
+      <p class="welcome-text">
+        One place for examination notices, college circulars, event updates, results,
+        and placement announcements.
+      </p>
+      <div class="hero-actions">
+        <a href="student-dashboard.html" class="button-link">View Announcements</a>
+        <a href="login.html" class="button-link button-link-secondary">Login</a>
+      </div>
+    </section>
+
+    <!-- ===== COLLEGE INTRODUCTION SECTION ===== -->
+    <section class="college-introduction" aria-labelledby="introduction-heading">
+      <h2 id="introduction-heading">About Our College</h2>
+      <div class="introduction-content">
+        <div class="introduction-logo" aria-hidden="true">CIT</div>
+        <p>
+          Cybernaut Institute of Technology is committed to academic excellence, innovation,
+          and student success. This portal helps students stay informed about important
+          announcements and allows administrators to publish and manage notices from one place.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== LATEST ANNOUNCEMENTS PREVIEW SECTION ===== -->
+    <section class="announcements-preview" aria-labelledby="latest-announcements-heading">
+      <div class="section-heading-row">
+        <h2 id="latest-announcements-heading">Latest Announcements</h2>
+        <a href="student-dashboard.html">View all announcements</a>
+      </div>
+
+      <!-- FLASK: replace the three cards below with a loop over recent announcements. -->
+      <div id="announcement-list" class="announcement-list">
+        <article class="announcement-card" data-id="1" data-category="examination">
+          <h3 class="announcement-title">Mid-Semester Examination Schedule Released</h3>
+          <p class="announcement-date">15 November 2026</p>
+          <span class="announcement-category">Examination Notifications</span>
+          <p class="announcement-description">Check the detailed timetable for all departments.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="2" data-category="circular">
+          <h3 class="announcement-title">Revised Academic Calendar Notice</h3>
+          <p class="announcement-date">14 November 2026</p>
+          <span class="announcement-category">College Circulars</span>
+          <p class="announcement-description">Please review the updated dates for academic activities.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="3" data-category="events">
+          <h3 class="announcement-title">Annual Technical Symposium Registration Open</h3>
+          <p class="announcement-date">12 November 2026</p>
+          <span class="announcement-category">Events and Workshops</span>
+          <p class="announcement-description">Register your team for workshops, paper presentations, and competitions.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== NOTICE CATEGORIES SECTION ===== -->
+    <section class="notice-categories" aria-labelledby="categories-heading">
+      <h2 id="categories-heading">Notice Categories</h2>
+      <div class="category-grid">
+        <article class="category-card">
+          <h3>Examination Notifications</h3>
+          <p>Exam schedules, hall tickets, and examination instructions.</p>
+          <a href="student-dashboard.html#examination">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>College Circulars</h3>
+          <p>Important instructions and official announcements from the college.</p>
+          <a href="student-dashboard.html#circular">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>Events and Workshops</h3>
+          <p>Technical events, seminars, workshops, and cultural activities.</p>
+          <a href="student-dashboard.html#events">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>Results</h3>
+          <p>Published results and related student notifications.</p>
+          <a href="student-dashboard.html#results">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>Placement Announcements</h3>
+          <p>Placement drives, company visits, and recruitment updates.</p>
+          <a href="student-dashboard.html#placement">View notices</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER SECTION ===== -->
+  <footer class="site-footer">
+    <div>
+      <h2>Cybernaut Institute of Technology</h2>
+      <p>123 Education Road, Knowledge City, India - 000000</p>
+      <p>Phone: +91-00000-00000 | Email: info@cybernaut.edu.in</p>
+    </div>
+    <p>&copy; 2026 Cybernaut Institute of Technology. All rights reserved.</p>
+  </footer>
+</body>
+</html>
