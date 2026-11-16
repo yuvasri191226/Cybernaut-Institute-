@@ -1,0 +1,98 @@
+PHOTO CREDITS
+=============
+All photos are from Unsplash (https://unsplash.com) and are licensed under the
+Unsplash License: https://unsplash.com/license
+Free to use for commercial and non-commercial purposes. Attribution appreciated.
+
+------------------------------------------------------------------------------
+
+FILE:        campus-hero.jpg
+DIMENSIONS:  1920x1280px
+SOURCE URL:  https://unsplash.com/photos/e08756dedf3f
+CDN URL:     https://images.unsplash.com/photo-1541339907198-e08756dedf3f
+PHOTOGRAPHER: Cole Keister
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        campus-building.jpg
+DIMENSIONS:  1400x917px
+SOURCE URL:  https://unsplash.com/photos/701939374585
+CDN URL:     https://images.unsplash.com/photo-1562774053-701939374585
+PHOTOGRAPHER: Mwangi Gatheca
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        classroom.jpg
+DIMENSIONS:  1400x933px
+SOURCE URL:  https://unsplash.com/photos/425eee4c7efc
+CDN URL:     https://images.unsplash.com/photo-1571260899304-425eee4c7efc
+PHOTOGRAPHER: Claudio Schwarz
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        computer-lab.jpg
+DIMENSIONS:  1400x933px
+SOURCE URL:  https://unsplash.com/photos/7c0da6231fb1
+CDN URL:     https://images.unsplash.com/photo-1515378960530-7c0da6231fb1
+PHOTOGRAPHER: Marvin Meyer
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        library.jpg
+DIMENSIONS:  1400x1294px
+SOURCE URL:  https://unsplash.com/photos/b7833e8f5570
+CDN URL:     https://images.unsplash.com/photo-1481627834876-b7833e8f5570
+PHOTOGRAPHER: Glen Carrie
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        research-lab.jpg
+DIMENSIONS:  1400x933px
+SOURCE URL:  https://unsplash.com/photos/543bc11b234d
+CDN URL:     https://images.unsplash.com/photo-1532094349884-543bc11b234d
+PHOTOGRAPHER: Chokniti Khongchum
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        events.jpg
+DIMENSIONS:  1400x933px
+SOURCE URL:  https://unsplash.com/photos/178a50c2df87
+CDN URL:     https://images.unsplash.com/photo-1540575467063-178a50c2df87
+PHOTOGRAPHER: Teemu Paananen
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        student-activity.jpg
+DIMENSIONS:  1400x788px
+SOURCE URL:  https://unsplash.com/photos/49953e39b3ac
+CDN URL:     https://images.unsplash.com/photo-1529156069898-49953e39b3ac
+PHOTOGRAPHER: Alexis Brown
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        graduation.jpg
+DIMENSIONS:  1400x933px
+SOURCE URL:  https://unsplash.com/photos/6f3031224c94
+CDN URL:     https://images.unsplash.com/photo-1523580494863-6f3031224c94
+PHOTOGRAPHER: Good Faces Agency
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+
+FILE:        sports.jpg
+DIMENSIONS:  1400x933px
+SOURCE URL:  https://unsplash.com/photos/ffe607ba8211
+CDN URL:     https://images.unsplash.com/photo-1461896836934-ffe607ba8211
+PHOTOGRAPHER: Braden Collum
+LICENCE:     Unsplash License (free, no attribution required)
+
+------------------------------------------------------------------------------
+Downloaded: 2026-11-16
