@@ -1,1 +1,176 @@
-[]
+[
+  {
+    "id": 1,
+    "title": "Mid-Semester Examination Schedule Released",
+    "description": "The Controller of Examinations has released the mid-semester examination schedule for all departments. Theory examinations will begin on 25 November 2026 and end on 05 December 2026. Students must collect their hall tickets from the department office. Seating arrangements will be published on the exam cell notice board one day before each exam. Students are advised to check the timetable carefully and report any clashes to their department coordinator within 3 working days.",
+    "ai_summary": "• Mid-semester exams run 25 Nov – 05 Dec 2026 for all departments.\n• Hall tickets available at department offices; seating posted one day before each exam.\n• Report timetable clashes to your department coordinator within 3 working days.",
+    "tamil_title": "இடைப்பருவத் தேர்வு அட்டவணை வெளியிடப்பட்டது",
+    "tamil_description": "அனைத்துத் துறைகளுக்கான இடைப்பருவத் தேர்வு அட்டவணையை தேர்வுக் கட்டுப்பாட்டாளர் வெளியிட்டுள்ளார். கோட்பாடுத் தேர்வுகள் 25 நவம்பர் 2026 முதல் 05 டிசம்பர் 2026 வரை நடைபெறும்.",
+    "category": "examination",
+    "department": "all",
+    "target_year": "all",
+    "published_date": "2026-11-15",
+    "updated_at": null,
+    "is_important": true,
+    "is_updated": false,
+    "source_website": "CIT Examination Cell",
+    "source_url": "https://cit.edu.in/examinations/mid-sem-schedule-nov2026",
+    "attachments": [
+      { "name": "MidSem_Timetable_Nov2026.pdf", "url": "https://cit.edu.in/docs/MidSem_Timetable_Nov2026.pdf" }
+    ],
+    "verification_status": "Verified",
+    "is_demo": true
+  },
+  {
+    "id": 2,
+    "title": "Revised Academic Calendar 2026–27 (Odd Semester)",
+    "description": "Due to the extended monsoon break, the academic calendar for the odd semester 2026–27 has been revised. Classes will now resume on 18 November 2026. The last working day is rescheduled to 20 January 2027. Internal assessment deadlines and fee payment due dates have been adjusted accordingly. All students and faculty must review the updated calendar and plan accordingly. Contact the academic section for clarifications.",
+    "ai_summary": "• Classes resume 18 November 2026; last working day moved to 20 January 2027.\n• Internal assessment and fee payment deadlines adjusted.\n• Contact the academic section for clarifications.",
+    "tamil_title": "திருத்தப்பட்ட கல்வி நாட்காட்டி 2026–27 (ஒற்றைப் பருவம்)",
+    "tamil_description": "நீடிக்கப்பட்ட மழைக்கால விடுமுறையின் காரணமாக, 2026–27 ஒற்றைப் பருவத்திற்கான கல்வி நாட்காட்டி மறுபரிசீலனை செய்யப்பட்டுள்ளது.",
+    "category": "circular",
+    "department": "all",
+    "target_year": "all",
+    "published_date": "2026-11-14",
+    "updated_at": "2026-11-16",
+    "is_important": false,
+    "is_updated": true,
+    "source_website": "CIT Academic Section",
+    "source_url": "https://cit.edu.in/academics/calendar-2026-27",
+    "attachments": [
+      { "name": "AcademicCalendar_OddSem_Revised.pdf", "url": "https://cit.edu.in/docs/AcademicCalendar_OddSem_Revised.pdf" }
+    ],
+    "verification_status": "Verified",
+    "is_demo": true
+  },
+  {
+    "id": 3,
+    "title": "CYNOSURE 2026 – Annual Technical Symposium Registration Open",
+    "description": "CYNOSURE 2026, the flagship annual technical symposium of Cybernaut Institute of Technology, is scheduled for 10–11 December 2026. This year features 12 technical events including Paper Presentation, Project Expo, Hackathon, Coding Contest, Robo Race, and Circuit Debugging. Guest speakers from Google, Microsoft, and Infosys will address the opening ceremony. Registration is open for teams of 2–4 members. Entry fee: ₹200 per team. Last date for registration: 30 November 2026. Certificates will be provided to all participants.",
+    "ai_summary": "• CYNOSURE 2026 on 10–11 December with 12 technical events.\n• Team registration (2–4 members) for ₹200; deadline 30 November 2026.\n• Guest speakers from Google, Microsoft, and Infosys; certificates for all participants.",
+    "tamil_title": "CYNOSURE 2026 – ஆண்டு தொழில்நுட்ப விழா பதிவு தொடக்கம்",
+    "tamil_description": "CYNOSURE 2026, சைபர்நாட் தொழில்நுட்பக் கல்வி நிறுவனத்தின் ஆண்டு தொழில்நுட்ப விழா, 10–11 டிசம்பர் 2026 அன்று நடைபெறும்.",
+    "category": "events",
+    "department": "all",
+    "target_year": "all",
+    "published_date": "2026-11-12",
+    "updated_at": null,
+    "is_important": true,
+    "is_updated": false,
+    "source_website": "CIT Events Committee",
+    "source_url": "https://cit.edu.in/events/cynosure-2026",
+    "attachments": [
+      { "name": "CYNOSURE_2026_Brochure.pdf", "url": "https://cit.edu.in/docs/CYNOSURE_2026_Brochure.pdf" }
+    ],
+    "verification_status": "Verified",
+    "is_demo": true
+  },
+  {
+    "id": 4,
+    "title": "Odd Semester Results – All Branches Published",
+    "description": "The Controller of Examinations announces that odd semester results for all branches (B.Tech I, III, V, VII semesters) have been published. Students can view their results on the student portal using their roll number and date of birth. Grade cards will be distributed through department offices from 20 November 2026 onwards. Students with backlogs should contact the examination section for re-examination registration details. The last date for re-exam registration is 10 December 2026.",
+    "ai_summary": "• Odd semester results published for I, III, V, VII semesters (all branches).\n• View results on student portal; grade cards available from 20 November.\n• Re-exam registration deadline: 10 December 2026.",
+    "tamil_title": "ஒற்றைப் பருவத் தேர்வு முடிவுகள் – அனைத்து பிரிவுகளும் வெளியிடப்பட்டன",
+    "tamil_description": "அனைத்து பிரிவுகளுக்கான ஒற்றைப் பருவத் தேர்வு முடிவுகள் வெளியிடப்பட்டுள்ளன.",
+    "category": "results",
+    "department": "all",
+    "target_year": "all",
+    "published_date": "2026-11-10",
+    "updated_at": null,
+    "is_important": true,
+    "is_updated": false,
+    "source_website": "CIT Student Portal",
+    "source_url": "https://cit.edu.in/results",
+    "attachments": [],
+    "verification_status": "Verified",
+    "is_demo": true
+  },
+  {
+    "id": 5,
+    "title": "Campus Placement Drive – TechCorp Solutions (Product Engineer)",
+    "description": "TechCorp Solutions will conduct an on-campus placement drive at Cybernaut Institute of Technology on 28 November 2026. Position: Product Engineer. Package: ₹8.5 LPA (CTC). Eligibility: B.Tech final year students (CSE, IT, ECE) with CGPA ≥ 7.0 and no active backlogs. Required documents: Updated resume, college ID card, mark sheets of all semesters, and 2 passport-size photographs. Pre-placement talk on 27 November at 10:00 AM in Seminar Hall B. Register with the Training & Placement Cell by 25 November 2026.",
+    "ai_summary": "• TechCorp Solutions hiring Product Engineers on 28 Nov; ₹8.5 LPA package.\n• Eligible: Final year CSE/IT/ECE, CGPA ≥ 7.0, no backlogs.\n• Register with Placement Cell by 25 Nov; pre-placement talk 27 Nov 10 AM.",
+    "tamil_title": "வளாகப் பணி நியமனம் – TechCorp Solutions (Product Engineer)",
+    "tamil_description": "TechCorp Solutions நிறுவனம் 28 நவம்பர் 2026 அன்று சைபர்நாட் தொழில்நுட்பக் கல்வி நிறுவனத்தில் வளாகப் பணி நியமன முகாமை நடத்தும்.",
+    "category": "placement",
+    "department": "CSE",
+    "target_year": "4",
+    "published_date": "2026-11-08",
+    "updated_at": null,
+    "is_important": true,
+    "is_updated": false,
+    "source_website": "CIT Training & Placement Cell",
+    "source_url": "https://cit.edu.in/placements/techcorp-nov2026",
+    "attachments": [
+      { "name": "TechCorp_JD_ProductEngineer.pdf", "url": "https://cit.edu.in/docs/TechCorp_JD_ProductEngineer.pdf" }
+    ],
+    "verification_status": "Verified",
+    "is_demo": true
+  },
+  {
+    "id": 6,
+    "title": "Practical Examination Schedule – Odd Semester Labs",
+    "description": "Practical examinations for all odd semester laboratory courses will commence from 22 November 2026. The department-wise lab schedule is attached. Students must bring their completed lab records, observation notebooks, and college ID cards. External examiners have been appointed for all departments. Students are requested to check the schedule carefully for their batch, lab number, and reporting time. Any student who fails to appear without a valid medical certificate will be marked absent.",
+    "ai_summary": "• Practical exams start 22 November 2026 for all odd semester labs.\n• Bring lab records, observation notebooks, and college ID.\n• Check batch-wise schedule; absence without medical certificate = marked absent.",
+    "tamil_title": "செய்முறைத் தேர்வு அட்டவணை – ஒற்றைப் பருவ ஆய்வகங்கள்",
+    "tamil_description": "அனைத்து ஒற்றைப் பருவ ஆய்வக பாடங்களுக்கான செய்முறைத் தேர்வுகள் 22 நவம்பர் 2026 முதல் தொடங்கும்.",
+    "category": "examination",
+    "department": "all",
+    "target_year": "all",
+    "published_date": "2026-11-05",
+    "updated_at": "2026-11-07",
+    "is_important": false,
+    "is_updated": true,
+    "source_website": "CIT Examination Cell",
+    "source_url": "https://cit.edu.in/examinations/practical-schedule-nov2026",
+    "attachments": [
+      { "name": "PracticalExam_Schedule_Nov2026.pdf", "url": "https://cit.edu.in/docs/PracticalExam_Schedule_Nov2026.pdf" }
+    ],
+    "verification_status": "Verified",
+    "is_demo": true
+  },
+  {
+    "id": 7,
+    "title": "Merit Scholarship Applications – Academic Year 2026–27",
+    "description": "Applications are invited for the Cybernaut Institute Merit Scholarship for the academic year 2026–27. The scholarship covers 50% of tuition fees for one year. Eligibility: Students who secured a CGPA of 8.5 or above in the previous academic year with no history of disciplinary action. Apply online through the student portal. Required documents: Mark sheets, income certificate, Aadhaar card copy, and a recommendation letter from the Head of Department. Last date to apply: 15 December 2026. Shortlisted students will be called for an interview in January 2027.",
+    "ai_summary": "• Merit scholarship covers 50% tuition; requires CGPA ≥ 8.5 (previous year).\n• Apply online with mark sheets, income certificate, Aadhaar, and HOD recommendation.\n• Application deadline: 15 December 2026; interviews in January 2027.",
+    "tamil_title": "தகுதி உதவித்தொகை விண்ணப்பங்கள் – 2026–27 கல்வி ஆண்டு",
+    "tamil_description": "2026–27 கல்வி ஆண்டிற்கான சைபர்நாட் நிறுவன தகுதி உதவித்தொகைக்கு விண்ணப்பங்கள் வரவேற்கப்படுகின்றன.",
+    "category": "circular",
+    "department": "all",
+    "target_year": "all",
+    "published_date": "2026-11-03",
+    "updated_at": null,
+    "is_important": false,
+    "is_updated": false,
+    "source_website": "CIT Scholarship Cell",
+    "source_url": "https://cit.edu.in/scholarships/merit-2026-27",
+    "attachments": [
+      { "name": "MeritScholarship_Application_Form.pdf", "url": "https://cit.edu.in/docs/MeritScholarship_Application_Form.pdf" }
+    ],
+    "verification_status": "Needs Review",
+    "is_demo": true
+  },
+  {
+    "id": 8,
+    "title": "Hostel Mess Committee Elections & New Mess Menu Feedback",
+    "description": "Elections for the Hostel Mess Committee for the year 2026–27 will be held on 22 November 2026 in the common dining hall. All hostellers are eligible to vote and to nominate themselves. Nominations must be submitted to the Chief Warden's office by 19 November 2026. Additionally, the new winter mess menu has been drafted and feedback is invited from students before final approval. The proposed menu is available on the hostel notice board and the student portal. Submit your feedback using the online form by 20 November 2026.",
+    "ai_summary": "• Mess committee elections on 22 Nov; nominations due by 19 Nov at Chief Warden's office.\n• New winter mess menu feedback due by 20 Nov via online form.\n• All hostellers are eligible to vote and nominate.",
+    "tamil_title": "விடுதி உணவகக் குழு தேர்தல் & புதிய உணவு பட்டியல் கருத்துக்கள்",
+    "tamil_description": "2026–27 ஆண்டிற்கான விடுதி உணவகக் குழு தேர்தல் 22 நவம்பர் 2026 அன்று பொதுச் சாப்பாட்டு அரங்கில் நடைபெறும்.",
+    "category": "events",
+    "department": "all",
+    "target_year": "all",
+    "published_date": "2026-11-01",
+    "updated_at": null,
+    "is_important": false,
+    "is_updated": false,
+    "source_website": "CIT Hostel Administration",
+    "source_url": "https://cit.edu.in/hostel/mess-committee-elections-2026",
+    "attachments": [
+      { "name": "Winter_Mess_Menu_Draft.pdf", "url": "https://cit.edu.in/docs/Winter_Mess_Menu_Draft.pdf" }
+    ],
+    "verification_status": "Needs Review",
+    "is_demo": true
+  }
+]

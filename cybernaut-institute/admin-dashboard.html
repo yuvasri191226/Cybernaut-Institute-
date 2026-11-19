@@ -8,16 +8,25 @@
   <link rel="icon" type="image/svg+xml" href="images/logo.svg">
 
   <link rel="stylesheet" href="css/style.css">
-  <script src="js/script.js" defer></script>
+  <link rel="stylesheet" href="css/member3-additions.css">
+  <script type="module" src="js/script.js"></script>
 </head>
 <body class="page-admin">
   <!-- ===== HEADER SECTION ===== -->
   <header class="site-header">
     <a href="index.html" class="logo-link" aria-label="Cybernaut Institute of Technology home">
-      <!-- Replace the placeholder with: <img src="images/logo.png" alt="Cybernaut Institute of Technology logo" width="80" height="80"> -->
       <span class="logo-placeholder" aria-hidden="true">CIT</span>
       <span class="college-name">CYBERNAUT INSTITUTE OF TECHNOLOGY</span>
     </a>
+    <div class="header-right-controls" id="header-right-controls">
+      <span class="status-pill" id="backend-status-pill"><span class="status-dot" id="status-dot"></span><span id="status-text">Checking…</span></span>
+      <button type="button" class="notif-bell" id="notif-bell-btn" aria-label="Notifications">🔔<span class="notif-badge" id="notif-count-badge">0</span></button>
+      <div class="user-pill" id="user-pill">
+        <span class="user-avatar" id="user-avatar">A</span>
+        <span class="user-info"><span class="user-name" id="admin-name-header">Admin</span><span class="user-dept" id="admin-role-header">System Administrator</span></span>
+        <button type="button" class="logout-btn" id="logout-btn" aria-label="Logout">Logout</button>
+      </div>
+    </div>
   </header>
 
   <!-- ===== NAVIGATION SECTION ===== -->
@@ -28,6 +37,12 @@
     <a href="login.html">Login</a>
   </nav>
 
+  <!-- Notification Panel -->
+  <div class="notif-dropdown" id="notif-panel" role="dialog" aria-label="Notifications panel">
+    <div class="notif-panel-header"><span>🔔 Notifications</span><button type="button" class="notif-mark-all-btn" id="notif-mark-all">Mark All as Read</button></div>
+    <div class="notif-list" id="notif-list"></div>
+  </div>
+
   <main class="dashboard-main admin-dashboard-main">
     <!-- ===== ADMIN WELCOME SECTION ===== -->
     <section class="dashboard-welcome" aria-labelledby="admin-welcome-heading">
@@ -35,26 +50,40 @@
       <p class="welcome-message">Manage announcements for Cybernaut Institute of Technology.</p>
     </section>
 
-
-    <!-- ===== SUMMARY CARDS (added by Member 2; sample figures, Member 3 will update) ===== -->
-    <section class="dashboard-stats" aria-label="Announcement summary">
-      <div class="stat-card"><span class="stat-number" id="admin-stat-total">6</span><span class="stat-label">Total announcements</span></div>
-      <div class="stat-card stat-review"><span class="stat-number" id="admin-stat-review">6</span><span class="stat-label">Needs review</span></div>
+    <!-- ===== 6 STAT CARDS ===== -->
+    <section class="dashboard-stats admin-stats-grid" aria-label="Announcement summary">
+      <div class="stat-card"><span class="stat-number" id="admin-stat-total">0</span><span class="stat-label">Total Announcements</span></div>
       <div class="stat-card stat-verified"><span class="stat-number" id="admin-stat-verified">0</span><span class="stat-label">Verified</span></div>
+      <div class="stat-card stat-review"><span class="stat-number" id="admin-stat-review">0</span><span class="stat-label">Needs Review</span></div>
       <div class="stat-card stat-rejected"><span class="stat-number" id="admin-stat-rejected">0</span><span class="stat-label">Rejected</span></div>
+      <div class="stat-card"><span class="stat-number" id="admin-stat-important">0</span><span class="stat-label">Important</span></div>
+      <div class="stat-card"><span class="stat-number" id="admin-stat-students">0</span><span class="stat-label">Total Students</span></div>
+    </section>
+
+    <!-- ===== SCRAPER HEALTH PANEL ===== -->
+    <section class="admin-panel scraper-panel" id="scraping-status" aria-labelledby="scraper-heading">
+      <div class="panel-header">
+        <h2 id="scraper-heading">🤖 Automated Scraper Status</h2>
+        <button type="button" class="trigger-scrape-btn" id="trigger-scrape-btn">▶ Trigger Manual Scrape</button>
+      </div>
+      <div class="scraper-grid" id="scraper-grid">
+        <div class="scraper-stat"><strong id="scrape-last-time">—</strong><span>Last Scrape</span></div>
+        <div class="scraper-stat"><strong id="scrape-status" class="scrape-ok">—</strong><span>Status</span></div>
+        <div class="scraper-stat"><strong id="scrape-discovered">0</strong><span>Discovered</span></div>
+        <div class="scraper-stat"><strong id="scrape-new">0</strong><span>New</span></div>
+        <div class="scraper-stat"><strong id="scrape-updated">0</strong><span>Updated</span></div>
+        <div class="scraper-stat"><strong id="scrape-failed">0</strong><span>Failed</span></div>
+      </div>
     </section>
 
     <!-- ===== ADD ANNOUNCEMENT FORM SECTION ===== -->
-    <section class="admin-form-section" aria-labelledby="add-announcement-heading">
+    <section class="admin-panel" aria-labelledby="add-announcement-heading">
       <h2 id="add-announcement-heading">Add New Announcement</h2>
-
-      <!-- FLASK: form will POST to /admin/announcements/add (Flask will save to MySQL). -->
       <form id="announcement-form" class="announcement-form" action="#" method="post" enctype="multipart/form-data">
         <div class="form-group">
           <label for="announcement-title">Title</label>
           <input type="text" id="announcement-title" name="title" required placeholder="Enter announcement title">
         </div>
-
         <div class="form-group">
           <label for="announcement-category">Category</label>
           <select id="announcement-category" name="category" required>
@@ -66,32 +95,75 @@
             <option value="placement">Placement Announcements</option>
           </select>
         </div>
-
+        <div class="form-group">
+          <label for="announcement-department">Department</label>
+          <select id="announcement-department" name="department">
+            <option value="all">All Departments</option>
+            <option value="IT">IT</option>
+            <option value="CSE">CSE</option>
+            <option value="ECE">ECE</option>
+            <option value="MECH">Mechanical</option>
+            <option value="Civil">Civil</option>
+            <option value="EEE">EEE</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="announcement-year">Target Year</label>
+          <select id="announcement-year" name="target_year">
+            <option value="all">All Years</option>
+            <option value="1">1st Year</option>
+            <option value="2">2nd Year</option>
+            <option value="3">3rd Year</option>
+            <option value="4">4th Year</option>
+          </select>
+        </div>
         <div class="form-group">
           <label for="announcement-date">Date</label>
           <input type="date" id="announcement-date" name="date" required>
         </div>
-
         <div class="form-group">
           <label for="announcement-description">Description</label>
           <textarea id="announcement-description" name="description" required rows="5" placeholder="Enter the full announcement details"></textarea>
         </div>
-
         <div class="form-group">
-          <label for="announcement-document-link">Document Link (optional)</label>
-          <input type="url" id="announcement-document-link" name="document_link" placeholder="https://example.com/document.pdf">
+          <label for="announcement-source-url">Source URL (optional)</label>
+          <input type="url" id="announcement-source-url" name="source_url" placeholder="https://cit.edu.in/notice/...">
         </div>
-
-        <button type="submit" class="submit-button">Add Announcement</button>
+        <div class="form-group">
+          <label for="announcement-document-link">Document / PDF Link (optional)</label>
+          <input type="url" id="announcement-document-link" name="document_link" placeholder="https://cit.edu.in/docs/document.pdf">
+        </div>
+        <div class="form-group form-check-row">
+          <label><input type="checkbox" id="announcement-important" name="is_important"> Mark as Important</label>
+        </div>
+        <button type="submit" class="submit-button" id="form-submit-btn">Add Announcement</button>
         <span class="form-message" id="announcement-form-message" aria-live="polite"></span>
       </form>
     </section>
 
     <!-- ===== MANAGE ANNOUNCEMENTS TABLE SECTION ===== -->
-    <section class="admin-table-section" aria-labelledby="manage-announcements-heading">
-      <h2 id="manage-announcements-heading">Manage Announcements</h2>
-
-      <!-- FLASK: replace the tbody content with a loop over all announcements from MySQL. -->
+    <section class="admin-panel" aria-labelledby="manage-announcements-heading">
+      <div class="panel-header">
+        <h2 id="manage-announcements-heading">Manage Announcements</h2>
+      </div>
+      <!-- Admin Search -->
+      <div class="admin-search-row" id="admin-search-row">
+        <input type="search" id="admin-search-input" placeholder="Search announcements…" autocomplete="off">
+        <select id="admin-category-filter">
+          <option value="all">All Categories</option>
+          <option value="examination">Examination</option>
+          <option value="circular">Circulars</option>
+          <option value="events">Events</option>
+          <option value="results">Results</option>
+          <option value="placement">Placement</option>
+        </select>
+        <select id="admin-status-filter">
+          <option value="all">All Statuses</option>
+          <option value="Needs Review">Needs Review</option>
+          <option value="Verified">Verified</option>
+          <option value="Rejected">Rejected</option>
+        </select>
+      </div>
       <div class="table-wrapper">
         <table id="announcements-table" class="announcements-table">
           <thead>
@@ -99,92 +171,14 @@
               <th scope="col">ID</th>
               <th scope="col">Title</th>
               <th scope="col">Category</th>
-              <th scope="col">Verification Status</th>
+              <th scope="col">Status</th>
               <th scope="col">Date</th>
-              <th scope="col">Description</th>
-              <th scope="col">Document Link</th>
+              <th scope="col">Attachment</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody id="announcement-table-body">
-            <tr data-id="1" data-category="examination">
-              <td>1</td>
-              <td>Mid-Semester Examination Schedule Released</td>
-              <td>Examination Notifications</td>
-              <td class="status-cell">Needs Review</td>
-              <td>15 November 2026</td>
-              <td>Check the detailed timetable for all departments.</td>
-              <td>—</td>
-              <td class="actions-cell">
-                <button type="button" class="edit-button">Edit</button>
-                <button type="button" class="delete-button">Delete</button>
-              </td>
-            </tr>
-            <tr data-id="2" data-category="circular">
-              <td>2</td>
-              <td>Revised Academic Calendar Notice</td>
-              <td>College Circulars</td>
-              <td class="status-cell">Needs Review</td>
-              <td>14 November 2026</td>
-              <td>Please review the updated dates for academic activities.</td>
-              <td>—</td>
-              <td class="actions-cell">
-                <button type="button" class="edit-button">Edit</button>
-                <button type="button" class="delete-button">Delete</button>
-              </td>
-            </tr>
-            <tr data-id="3" data-category="events">
-              <td>3</td>
-              <td>Annual Technical Symposium Registration Open</td>
-              <td>Events and Workshops</td>
-              <td class="status-cell">Needs Review</td>
-              <td>12 November 2026</td>
-              <td>Register your team for workshops, paper presentations, and competitions.</td>
-              <td>—</td>
-              <td class="actions-cell">
-                <button type="button" class="edit-button">Edit</button>
-                <button type="button" class="delete-button">Delete</button>
-              </td>
-            </tr>
-            <tr data-id="4" data-category="results">
-              <td>4</td>
-              <td>Semester Results Declared</td>
-              <td>Results</td>
-              <td class="status-cell">Needs Review</td>
-              <td>10 November 2026</td>
-              <td>Results for all branches are now available on the student portal.</td>
-              <td>—</td>
-              <td class="actions-cell">
-                <button type="button" class="edit-button">Edit</button>
-                <button type="button" class="delete-button">Delete</button>
-              </td>
-            </tr>
-            <tr data-id="5" data-category="placement">
-              <td>5</td>
-              <td>Placement Drive: TechCorp Solutions</td>
-              <td>Placement Announcements</td>
-              <td class="status-cell">Needs Review</td>
-              <td>08 November 2026</td>
-              <td>Eligibility: B.Tech final year, CGPA >= 7.0. Register by 20 Nov.</td>
-              <td>—</td>
-              <td class="actions-cell">
-                <button type="button" class="edit-button">Edit</button>
-                <button type="button" class="delete-button">Delete</button>
-              </td>
-            </tr>
-            <tr data-id="6" data-category="examination">
-              <td>6</td>
-              <td>Practical Examination Schedule</td>
-              <td>Examination Notifications</td>
-              <td class="status-cell">Needs Review</td>
-              <td>05 November 2026</td>
-              <td>Lab practicals begin next week. Check your department notice board.</td>
-              <td>—</td>
-              <td class="actions-cell">
-                <button type="button" class="edit-button">Edit</button>
-                <button type="button" class="delete-button">Delete</button>
-              </td>
-            </tr>
+            <!-- Rows rendered dynamically by admin.js -->
           </tbody>
         </table>
       </div>
