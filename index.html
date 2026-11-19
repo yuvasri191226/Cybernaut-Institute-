@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Official announcement portal of Cybernaut Institute of Technology.">
+  <title>Home | Cybernaut Institute of Technology</title>
+  <link rel="icon" type="image/svg+xml" href="images/logo.svg">
+
+  <!-- All pages share this stylesheet and script. -->
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/script.js" defer></script>
+</head>
+<body class="page-home">
+  <!-- ===== HEADER SECTION ===== -->
+  <header class="site-header">
+    <a href="index.html" class="logo-link" aria-label="Cybernaut Institute of Technology home">
+      <!-- Replace the placeholder with: <img src="images/logo.png" alt="Cybernaut Institute of Technology logo" width="80" height="80"> -->
+      <span class="logo-placeholder" aria-hidden="true">CIT</span>
+      <span class="college-name">CYBERNAUT INSTITUTE OF TECHNOLOGY</span>
+    </a>
+  </header>
+
+  <!-- ===== NAVIGATION SECTION ===== -->
+  <nav class="main-navigation" aria-label="Main navigation">
+    <a href="index.html" aria-current="page">Home</a>
+    <a href="student-dashboard.html">Student Dashboard</a>
+    <a href="admin-dashboard.html">Admin Dashboard</a>
+    <a href="login.html">Login</a>
+  </nav>
+
+  <main>
+    <!-- ===== WELCOME SECTION ===== -->
+    <section class="welcome-section" aria-labelledby="welcome-heading">
+      <p class="welcome-label">College Announcement Monitoring System</p>
+      <h1 id="welcome-heading">Welcome to Cybernaut Institute of Technology</h1>
+      <p class="welcome-text">
+        One place for examination notices, college circulars, event updates, results,
+        and placement announcements.
+      </p>
+      <div class="hero-actions">
+        <a href="student-dashboard.html" class="button-link">View Announcements</a>
+        <a href="login.html" class="button-link button-link-secondary">Login</a>
+      </div>
+    </section>
+
+
+    <!-- ===== CAMPUS AT A GLANCE (added by Member 2 for the design) =====
+         NOTE: figures below match the project's sample data. Replace with real college figures. -->
+    <section class="stats-strip" aria-label="Campus at a glance">
+      <div class="stat-item"><span class="stat-number">6</span><span class="stat-label">Academic departments</span></div>
+      <div class="stat-item"><span class="stat-number">4</span><span class="stat-label">Years of B.Tech study</span></div>
+      <div class="stat-item"><span class="stat-number">5</span><span class="stat-label">Notice categories in one place</span></div>
+      <div class="stat-item"><span class="stat-number">24/7</span><span class="stat-label">Online access to notices</span></div>
+    </section>
+
+    <!-- ===== COLLEGE INTRODUCTION SECTION ===== -->
+    <section class="college-introduction" aria-labelledby="introduction-heading">
+      <h2 id="introduction-heading">About Our College</h2>
+      <div class="introduction-content">
+        <div class="introduction-logo photo photo-campus-building" aria-hidden="true"><span class="introduction-monogram">CIT</span></div>
+        <p>
+          Cybernaut Institute of Technology is committed to academic excellence, innovation,
+          and student success. This portal helps students stay informed about important
+          announcements and allows administrators to publish and manage notices from one place.
+        </p>
+      </div>
+    </section>
+
+    <!-- ===== DEPARTMENTS AND FACILITIES (added by Member 2 for the design) ===== -->
+    <section class="departments-section" aria-labelledby="departments-heading">
+      <div class="section-heading-row">
+        <h2 id="departments-heading">Departments and facilities</h2>
+      </div>
+      <div class="department-grid">
+        <article class="department-card"><span class="department-code">IT</span><h3>Information Technology</h3><p>Software engineering, networks, data and cloud computing.</p></article>
+        <article class="department-card"><span class="department-code">CSE</span><h3>Computer Science and Engineering</h3><p>Algorithms, artificial intelligence and systems programming.</p></article>
+        <article class="department-card"><span class="department-code">ECE</span><h3>Electronics and Communication</h3><p>Embedded systems, VLSI and communication technologies.</p></article>
+        <article class="department-card"><span class="department-code">MECH</span><h3>Mechanical Engineering</h3><p>Design, thermal systems and modern manufacturing.</p></article>
+        <article class="department-card"><span class="department-code">Civil</span><h3>Civil Engineering</h3><p>Structures, surveying and sustainable infrastructure.</p></article>
+        <article class="department-card"><span class="department-code">EEE</span><h3>Electrical and Electronics</h3><p>Power systems, electrical machines and control.</p></article>
+      </div>
+
+      <div class="facility-grid">
+        <figure class="facility-card"><div class="photo photo-classroom" role="img" aria-label="Representative image of a smart classroom"></div><figcaption>Smart classrooms</figcaption></figure>
+        <figure class="facility-card"><div class="photo photo-computer-lab" role="img" aria-label="Representative image of a computer laboratory"></div><figcaption>Computer laboratories</figcaption></figure>
+        <figure class="facility-card"><div class="photo photo-library" role="img" aria-label="Representative image of a library"></div><figcaption>Central library</figcaption></figure>
+        <figure class="facility-card"><div class="photo photo-research-lab" role="img" aria-label="Representative image of a research laboratory"></div><figcaption>Research and innovation labs</figcaption></figure>
+      </div>
+      <p class="image-note">Representative images, not the actual Cybernaut campus.</p>
+    </section>
+
+    <!-- ===== LATEST ANNOUNCEMENTS PREVIEW SECTION ===== -->
+    <section class="announcements-preview" aria-labelledby="latest-announcements-heading">
+      <div class="section-heading-row">
+        <h2 id="latest-announcements-heading">Latest Announcements</h2>
+        <a href="student-dashboard.html">View all announcements</a>
+      </div>
+
+      <!-- FLASK: replace the three cards below with a loop over recent announcements. -->
+      <div id="announcement-list" class="announcement-list">
+        <article class="announcement-card" data-id="1" data-category="examination">
+          <h3 class="announcement-title">Mid-Semester Examination Schedule Released</h3>
+          <p class="announcement-date">15 November 2026</p>
+          <span class="announcement-category">Examination Notifications</span>
+          <p class="announcement-description">Check the detailed timetable for all departments.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="2" data-category="circular">
+          <h3 class="announcement-title">Revised Academic Calendar Notice</h3>
+          <p class="announcement-date">14 November 2026</p>
+          <span class="announcement-category">College Circulars</span>
+          <p class="announcement-description">Please review the updated dates for academic activities.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+
+        <article class="announcement-card" data-id="3" data-category="events">
+          <h3 class="announcement-title">Annual Technical Symposium Registration Open</h3>
+          <p class="announcement-date">12 November 2026</p>
+          <span class="announcement-category">Events and Workshops</span>
+          <p class="announcement-description">Register your team for workshops, paper presentations, and competitions.</p>
+          <a href="#" class="view-details-link">View Details</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== NOTICE CATEGORIES SECTION ===== -->
+    <section class="notice-categories" aria-labelledby="categories-heading">
+      <h2 id="categories-heading">Notice Categories</h2>
+      <div class="category-grid">
+        <article class="category-card">
+          <h3>Examination Notifications</h3>
+          <p>Exam schedules, hall tickets, and examination instructions.</p>
+          <a href="student-dashboard.html#examination">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>College Circulars</h3>
+          <p>Important instructions and official announcements from the college.</p>
+          <a href="student-dashboard.html#circular">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>Events and Workshops</h3>
+          <p>Technical events, seminars, workshops, and cultural activities.</p>
+          <a href="student-dashboard.html#events">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>Results</h3>
+          <p>Published results and related student notifications.</p>
+          <a href="student-dashboard.html#results">View notices</a>
+        </article>
+        <article class="category-card">
+          <h3>Placement Announcements</h3>
+          <p>Placement drives, company visits, and recruitment updates.</p>
+          <a href="student-dashboard.html#placement">View notices</a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===== EVENTS AND ACTIVITIES (added by Member 2 for the design) ===== -->
+    <section class="events-section" aria-labelledby="events-heading">
+      <div class="section-heading-row">
+        <h2 id="events-heading">Events and activities</h2>
+        <a href="student-dashboard.html#events">All events and workshops</a>
+      </div>
+      <div class="event-grid">
+        <article class="event-card"><div class="photo photo-events" role="img" aria-label="Representative image of a college event"></div><div class="event-body"><span class="event-status">Registration open</span><h3>Annual Technical Symposium</h3><p>Workshops, paper presentations and team competitions.</p></div></article>
+        <article class="event-card"><div class="photo photo-student-activity" role="img" aria-label="Representative image of students working together"></div><div class="event-body"><span class="event-status">Announced via notices</span><h3>Workshops and seminars</h3><p>Hands-on sessions led by faculty and industry guests.</p></div></article>
+        <article class="event-card"><div class="photo photo-graduation" role="img" aria-label="Representative image of a graduation ceremony"></div><div class="event-body"><span class="event-status">Announced via notices</span><h3>Placement and career events</h3><p>Company visits, training sessions and recruitment drives.</p></div></article>
+      </div>
+    </section>
+
+    <!-- ===== CAMPUS LIFE GALLERY (added by Member 2 for the design) ===== -->
+    <section class="campus-gallery" aria-labelledby="gallery-heading">
+      <div class="section-heading-row">
+        <h2 id="gallery-heading">Life on campus</h2>
+      </div>
+      <div class="gallery-grid">
+        <figure class="gallery-item gallery-large"><div class="photo photo-campus-building" role="img" aria-label="Representative image of a modern campus building"></div><figcaption>Learning spaces</figcaption></figure>
+        <figure class="gallery-item"><div class="photo photo-student-activity" role="img" aria-label="Representative image of students on campus"></div><figcaption>Student life</figcaption></figure>
+        <figure class="gallery-item"><div class="photo photo-sports" role="img" aria-label="Representative image of campus sports"></div><figcaption>Sports</figcaption></figure>
+        <figure class="gallery-item"><div class="photo photo-library" role="img" aria-label="Representative image of a library"></div><figcaption>Reading and research</figcaption></figure>
+        <figure class="gallery-item"><div class="photo photo-events" role="img" aria-label="Representative image of a college event"></div><figcaption>Campus events</figcaption></figure>
+      </div>
+      <p class="image-note">Representative images, not the actual Cybernaut campus.</p>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER SECTION ===== -->
+  <footer class="site-footer">
+    <div>
+      <h2>Cybernaut Institute of Technology</h2>
+      <p>123 Education Road, Knowledge City, India - 000000</p>
+      <p>Phone: +91-00000-00000 | Email: info@cybernaut.edu.in</p>
+    </div>
+    <p>&copy; 2026 Cybernaut Institute of Technology. All rights reserved.</p>
+  </footer>
+</body>
+</html>
