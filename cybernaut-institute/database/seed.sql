@@ -16,11 +16,11 @@ USE college_announcements_db;
 INSERT INTO users
 (user_id, register_number, full_name, email, password_hash, role, department, academic_year, preferred_language)
 VALUES
-(1, NULL, 'Dr. R. Meenakshi', 'admin.it@cybernaut.edu.in', 'REPLACE_WITH_VALID_WERKZEUG_HASH_1', 'admin', 'IT', 'All', 'English'),
-(2, NULL, 'Dr. S. Karthikeyan', 'admin.cse@cybernaut.edu.in', 'REPLACE_WITH_VALID_WERKZEUG_HASH_2', 'admin', 'CSE', 'All', 'English'),
-(3, 'CITCSE2023001', 'Arun Kumar', 'arun.kumar@cybernaut.edu.in', 'REPLACE_WITH_VALID_WERKZEUG_HASH_3', 'student', 'CSE', 'Third Year', 'English'),
-(4, 'CITIT2023002', 'Priya Lakshmi', 'priya.lakshmi@cybernaut.edu.in', 'REPLACE_WITH_VALID_WERKZEUG_HASH_4', 'student', 'IT', 'Third Year', 'Tamil'),
-(5, 'CITECE2023003', 'Vignesh Raja', 'vignesh.raja@cybernaut.edu.in', 'REPLACE_WITH_VALID_WERKZEUG_HASH_5', 'student', 'ECE', 'Second Year', 'English');
+(1, NULL, 'Dr. R. Meenakshi', 'admin.it@cybernaut.edu.in', 'pbkdf2:sha256:1000000$R0VPV8XItUxLNBmq$2fd3bc88d94aae0c2f16d9341225477dca1b89ab9a292dacd8839a6fb053277c', 'admin', 'IT', 'All', 'English'),
+(2, NULL, 'Dr. S. Karthikeyan', 'admin.cse@cybernaut.edu.in', 'pbkdf2:sha256:1000000$RxXE2QbkVopyhUkb$91c68a97015ff7283102cc29318fc8d0536e3f311104ae832d1090e4a34c9766', 'admin', 'CSE', 'All', 'English'),
+(3, 'CITCSE2023001', 'Arun Kumar', 'arun.kumar@cybernaut.edu.in', 'pbkdf2:sha256:1000000$OJV5X3t7iZFUD4n3$bdaac382a206371136fc3a19acbe51bd17fa1e04a1d7e1c2d1b4ac81ff51a35b', 'student', 'CSE', 'Third Year', 'English'),
+(4, 'CITIT2023002', 'Priya Lakshmi', 'priya.lakshmi@cybernaut.edu.in', 'pbkdf2:sha256:1000000$V20BEIxPsrMKVgIa$3cf919534324a326e6ba1763daae032a1a39068679ddc3ccb5a87d51b12cc2f6', 'student', 'IT', 'Third Year', 'Tamil'),
+(5, 'CITECE2023003', 'Vignesh Raja', 'vignesh.raja@cybernaut.edu.in', 'pbkdf2:sha256:1000000$KjC1hY1eQTC0jrW9$5f7bc925f10317ed1197045ed219932283ee4005a5b21a9c1c6735e5bce84cc5', 'student', 'ECE', 'Second Year', 'English');
 
 INSERT INTO announcements
 (id, title, description, category, department, target_year, announcement_type, published_date, deadline_date, updated_date, is_updated, update_count, is_important, source_website, source_url, content_hash, verification_status, verified_by, verified_at, verification_note)
