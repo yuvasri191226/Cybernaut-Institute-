@@ -74,7 +74,11 @@ if os.path.isabs(_temp_dir_name):
 else:
     TEMP_DIR = os.path.join(BASE_DIR, _temp_dir_name)
 
-os.makedirs(TEMP_DIR, exist_ok=True)
+
+def ensure_temp_dir() -> str:
+    """Ensures the temporary directory exists and returns its path."""
+    os.makedirs(TEMP_DIR, exist_ok=True)
+    return TEMP_DIR
 
 # Sample PDFs directory
 SAMPLE_PDFS_DIR = os.path.join(BASE_DIR, "sample_pdfs")

@@ -20,6 +20,39 @@ except ImportError:
     import pdf_parser
 
 
+def validate_attachment_id(raw_id: Any) -> Optional[int]:
+    """
+    Safely validates that attachment_id is a valid integer or string of digits.
+
+    Accepts:
+        - int (excluding bool)
+        - string of digits (e.g. "5", " 5 ")
+
+    Rejects:
+        - None
+        - "" (empty string)
+        - "abc", "12abc"
+        - floats (e.g. 5.5)
+        - booleans (True, False)
+
+    Returns:
+        int: The parsed integer ID if valid.
+        None: If the attachment ID is invalid.
+    """
+    if raw_id is None:
+        return None
+    if isinstance(raw_id, bool):
+        return None
+    if isinstance(raw_id, int):
+        return raw_id
+    if isinstance(raw_id, str):
+        cleaned = raw_id.strip()
+        if cleaned.isdigit():
+            return int(cleaned)
+        return None
+    return None
+
+
 def process_single_attachment(
     attachment: Dict[str, Any],
     connection: Any = None,
@@ -27,15 +60,28 @@ def process_single_attachment(
 ) -> Dict[str, Any]:
     """
     Processes a single attachment record:
-    1. Downloads or resolves local PDF file safely.
-    2. Extracts and cleans text using pdf_parser.
-    3. Updates database status (if not in offline mode).
-    4. Cleans up any downloaded temporary files.
+    1. Validates attachment_id safely.
+    2. Downloads or resolves local PDF file safely.
+    3. Extracts and cleans text using pdf_parser.
+    4. Updates database status (if not in offline mode).
+    5. Cleans up any downloaded temporary files.
     Returns processing outcome summary dict.
     """
-    att_id = attachment.get("attachment_id", "N/A")
+    raw_id = attachment.get("attachment_id")
+    valid_id = validate_attachment_id(raw_id)
     file_name = attachment.get("file_name", "unknown.pdf")
     file_url = attachment.get("file_url", "")
+
+    if valid_id is None:
+        print(f"WARNING: Invalid attachment_id '{raw_id}' in record. Skipping record.")
+        return {
+            "attachment_id": raw_id,
+            "file_name": file_name,
+            "extraction_label": "FAILED",
+            "pages": 0,
+            "status": config.STATUS_FAILED,
+            "error": f"Invalid attachment_id: '{raw_id}'",
+        }
 
     temp_path: str = ""
     is_temp: bool = False
@@ -57,16 +103,16 @@ def process_single_attachment(
             extraction_label = "FAILED"
 
         # Step 4: Update database if connection available
-        if connection and not offline_mode:
+        if connection is not None and not offline_mode:
             db_handler.update_attachment_status(
                 connection=connection,
-                attachment_id=int(att_id),
+                attachment_id=valid_id,
                 status=status,
                 extracted_text=result.text if status == config.STATUS_COMPLETED else None,
             )
 
         return {
-            "attachment_id": att_id,
+            "attachment_id": valid_id,
             "file_name": file_name,
             "extraction_label": extraction_label,
             "pages": result.page_count,
@@ -76,11 +122,11 @@ def process_single_attachment(
 
     except Exception as e:
         # Download or unexpected processing failure
-        if connection and not offline_mode and att_id != "N/A":
+        if connection is not None and not offline_mode:
             try:
                 db_handler.update_attachment_status(
                     connection=connection,
-                    attachment_id=int(att_id),
+                    attachment_id=valid_id,
                     status=config.STATUS_FAILED,
                     extracted_text=None,
                 )
@@ -88,7 +134,7 @@ def process_single_attachment(
                 pass
 
         return {
-            "attachment_id": att_id,
+            "attachment_id": valid_id,
             "file_name": file_name,
             "extraction_label": "FAILED",
             "pages": 0,
@@ -120,6 +166,9 @@ def run_pipeline(limit: int = 0, offline: bool = False) -> Dict[str, int]:
     }
 
     if offline:
+        conn = None
+        print("Database connection: SKIPPED (offline mode)")
+        print()
         print("Running in OFFLINE mode (using sample PDFs without MySQL)...")
         print()
         sample_files = [
@@ -144,8 +193,8 @@ def run_pipeline(limit: int = 0, offline: bool = False) -> Dict[str, int]:
 
         for item in pending_items:
             stats["total"] += 1
-            print(f"Processing attachment ID: {item['attachment_id']}")
-            print(f"File: {item['file_name']}")
+            print(f"Processing attachment ID: {item.get('attachment_id')}")
+            print(f"File: {item.get('file_name', 'unknown.pdf')}")
 
             outcome = process_single_attachment(item, connection=None, offline_mode=True)
 
@@ -187,14 +236,16 @@ def run_pipeline(limit: int = 0, offline: bool = False) -> Dict[str, int]:
             processed_ids = set()
 
             for item in pending_items:
-                att_id = item["attachment_id"]
-                if att_id in processed_ids:
-                    continue
-                processed_ids.add(att_id)
+                raw_id = item.get("attachment_id")
+                valid_id = validate_attachment_id(raw_id)
+                if valid_id is not None:
+                    if valid_id in processed_ids:
+                        continue
+                    processed_ids.add(valid_id)
 
                 stats["total"] += 1
-                print(f"Processing attachment ID: {att_id}")
-                print(f"File: {item['file_name']}")
+                print(f"Processing attachment ID: {raw_id}")
+                print(f"File: {item.get('file_name', 'unknown.pdf')}")
 
                 outcome = process_single_attachment(item, connection=conn, offline_mode=False)
 
@@ -211,7 +262,7 @@ def run_pipeline(limit: int = 0, offline: bool = False) -> Dict[str, int]:
                     stats["failed"] += 1
 
         finally:
-            if conn:
+            if conn is not None:
                 conn.close()
 
     # Print Final Summary
