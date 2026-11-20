@@ -270,6 +270,62 @@ def verify_announcement(announcement_id):
         "verification_status": normalized_status
     }), 200
 
+# ── NEW: Trigger PDF extraction pipeline for an announcement ────────────────
+@admin_bp.route("/api/announcements/<int:announcement_id>/extract-pdf", methods=["POST"])
+@login_required
+def trigger_pdf_extraction(announcement_id):
+    """Trigger the PDF text extraction pipeline for an announcement's document_link."""
+    from db import get_connection
+    from pdf_extractor import config, db_handler
+
+    conn = get_connection()
+    try:
+        # Fetch pending attachments for this announcement
+        attachments = db_handler.fetch_pending_attachments(connection=conn, limit=100)
+        ann_attachments = [a for a in attachments if a.get("announcement_id") == announcement_id]
+
+        if not ann_attachments:
+            return jsonify({
+                "error": "No pending attachments found for this announcement.",
+                "announcement_id": announcement_id
+            }), 404
+
+        # Process the first pending attachment through the extraction pipeline
+        attachment = ann_attachments[0]
+        raw_id = attachment.get("attachment_id")
+        # Validate attachment_id safely
+        if raw_id is None:
+            return jsonify({"error": "Invalid attachment_id in record.", "announcement_id": announcement_id}), 400
+        try:
+            valid_id = int(raw_id)
+        except (ValueError, TypeError):
+            return jsonify({"error": f"Invalid attachment_id: '{raw_id}'.", "announcement_id": announcement_id}), 400
+
+        # Run extraction via the pipeline's single-attachment processor
+        from pdf_extractor.extractor_runner import process_single_attachment
+        result = process_single_attachment(
+            attachment,
+            connection=conn,
+            offline_mode=False
+        )
+
+        status = result.get("status", config.STATUS_FAILED)
+        return jsonify({
+            "announcement_id": announcement_id,
+            "attachment_id": valid_id,
+            "file_name": attachment.get("file_name"),
+            "extraction_status": status,
+            "error": result.get("error"),
+            "success": status in [config.STATUS_COMPLETED, config.STATUS_NO_TEXT]
+        })
+
+    except Exception as e:
+        conn.rollback()
+        import traceback
+        traceback.print_exc()
+        return jsonify({"error": str(e)}), 500
+    finally:
+        conn.close()
 
 @admin_bp.route("/api/admin/statistics", methods=["GET"])
 @admin_required

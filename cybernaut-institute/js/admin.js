@@ -763,7 +763,60 @@ export async function initAdminDashboard() {
   // ── Attach the form submit listener ──────────────────────────────────────
   const form = document.getElementById('announcement-form');
   if (form) {
-    form.addEventListener('submit', handleAddAnnouncement);
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      // Collect form data
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData.entries());
+
+      // Show loading state
+      showLoading();
+
+      // Submit to backend
+      const response = await fetch('/api/admin/announcements', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+
+      const result = await response.json();
+      hideLoading();
+
+      if (!response.ok) {
+        showToast(result.message || 'Failed to add announcement', 'error');
+        return;
+      }
+
+      // ── Trigger PDF extraction if document_link was provided ────────────
+      if (data.document_link) {
+        try {
+          const extractResponse = await fetch(
+            `/api/announcements/${result.announcement_id}/extract-pdf`,
+            { method: 'POST' }
+          );
+          const extractResult = await extractResponse.json();
+
+          // Display extraction result in the form message span
+          const msgSpan = document.getElementById('announcement-form-message');
+          if (msgSpan) {
+            if (extractResult.success) {
+              msgSpan.innerHTML = `<span style="color:green;">✓ PDF extracted: ${extractResult.extraction_status}</span>`;
+              showToast('Announcement added and PDF extraction triggered.', 'success');
+            } else {
+              msgSpan.innerHTML = `<span style="color:red;">✗ Extraction failed: ${extractResult.error || 'Unknown error'}</span>`;
+              showToast('Announcement added but PDF extraction failed.', 'warning');
+            }
+          }
+        } catch (extErr) {
+          console.error('PDF extraction trigger failed:', extErr);
+        }
+      } else {
+        if (msgSpan) {
+          msgSpan.textContent = 'Announcement added (no document link, no extraction).';
+        }
+      }
+    });
   }
 
   // ── Event delegation on the table body ───────────────────────────────────
