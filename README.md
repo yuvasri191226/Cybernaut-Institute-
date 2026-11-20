@@ -34,37 +34,41 @@ Cybernaut-Institute--main/
     └── pdf_extractor/               # 📄 config.py, downloader.py, pdf_parser.py, db_handler.py,
                                      #    extractor_runner.py, sample_pdfs/, tests/
                                      🚀 Setup & Execution
-1️⃣ Environment Configuration
+                                     
+1️⃣ **Environment Configuration**
 Copy .env.example to .env inside backend/, scraper/, and pdf_extractor/, then fill in your MySQL host, database name (college_announcements_db), credentials, and secret keys without committing real secrets to Git 🔒.
 
-2️⃣ Initialize MySQL Database
-Bash
+2️⃣ **Initialize MySQL Database**
+
 cd cybernaut-institute
 mysql -u root -p < database/schema.sql
 mysql -u root -p < database/seed.sql
 (See database/SETUP_GUIDE.md and database/ER_DIAGRAM.md for additional schema and setup details 📘.)
 
-3️⃣ Run the Flask Backend
-Bash
+3️⃣ **Run the Flask Backend**
+
 cd backend
 pip install -r requirements.txt
 python app.py
-4️⃣ Run Scraper & PDF Extractor
-Bash
+
+4️⃣ **Run Scraper & PDF Extractor**
+
 # 🕷️ Run web scraper pipeline
 python scraper/run_scraper.py
 
 # 📄 Run PDF extractor in offline sample mode (English, Tamil, scanned & edge-case PDFs)
 python pdf_extractor/extractor_runner.py --offline
-5️⃣ Serve the Frontend
+
+5️⃣ **Serve the Frontend**
+
 Open cybernaut-institute/ in VS Code and launch Live Server over HTTP (configured via .vscode/settings.json) rather than opening HTML files directly via file:// 🌐.
 
-🧪 Testing & Verification
+🧪 **Testing & Verification**
 📄 PDF Extractor Tests: Run pytest pdf_extractor/tests/ or python pdf_extractor/test_samples.py against pdf_extractor/sample_pdfs/ (sample_1_english_announcement.pdf, sample_2_tamil_announcement.pdf, sample_3_scanned_notice.pdf, sample_corrupted.pdf, sample_mixed_tamil_english.pdf, sample_multipage.pdf, sample_password_protected.pdf).
 
-⚙️ Backend API Tests: Run python backend/test_backend.py to verify endpoints, authentication, and database integration.
+⚙️ **Backend API Tests**: Run python backend/test_backend.py to verify endpoints, authentication, and database integration.
 
-🛡️ Scope & Compliance Notes
+🛡️ **Scope & Compliance Notes**
 ✅ Collects only permitted public academic announcement data and sample fixtures; does not bypass authentication walls, CAPTCHAs, or rate limits, or expose private personal records.
 
 ⚠️ Failed network requests or unreadable PDFs are classified as explicit errors (Failed / No Text) rather than treated as permanent deletions of existing notices.
