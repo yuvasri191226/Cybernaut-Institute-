@@ -6,7 +6,7 @@ and prints structured console output.
 import os
 import sys
 import argparse
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 try:
     from . import config

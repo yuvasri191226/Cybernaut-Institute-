@@ -11,15 +11,17 @@ Developed for **Cybernaut Institute of Technology** (Member 7 Module).
 The **PDF Text Extraction Pipeline** is an automated backend component that continuously monitors and processes college announcement PDF attachments stored in the central MySQL database (`college_announcements_db`).
 
 When scrapers (Member 4) or administrators insert announcement documents, attachment records are initially marked with `extraction_status = 'Pending'`. This pipeline:
-1. Identifies and fetches pending PDF attachments.
-2. Safely downloads remote documents or resolves local PDF files, enforcing strict SSRF protections and file size controls.
-3. Extracts and cleans text page-by-page using `pdfplumber` (with automatic fallback to `pypdf`).
-4. Faithfully preserves both English and native **Tamil Unicode** text (`U+0B80–U+0BFF`).
-5. Intelligently classifies documents:
+1. Identifies and fetches pending PDF attachments from MySQL.
+2. Validates `attachment_id` inputs safely (rejects invalid types like strings, booleans, floats, and empty values without crashing).
+3. Safely downloads remote documents or resolves local PDF files, enforcing strict SSRF protections and file size controls.
+4. Extracts and cleans text page-by-page using `pdfplumber` (with automatic fallback to `pypdf`).
+5. Faithfully preserves both English and native **Tamil Unicode** text (`U+0B80–U+0BFF`).
+6. Intelligently classifies documents:
    - **`Completed`**: Documents with valid extractable text (saved to `extracted_text`).
    - **`No Text`**: Valid PDFs that contain only scanned images or blank pages without embedded text.
    - **`Failed`**: Corrupted, password-protected, unreachable, or invalid files.
-6. Updates MySQL with the exact status, cleaned text, and timestamp (`extracted_at = NOW()`).
+7. Updates MySQL with the exact status, cleaned text, and timestamp (`extracted_at = NOW()`).
+8. Operates in both **Live Database Mode** and **Zero-Dependency Offline Mode** (`--offline`), which bypasses MySQL completely and processes local sample documents.
 
 ---
 
@@ -36,6 +38,8 @@ When scrapers (Member 4) or administrators insert announcement documents, attach
                                                  v
                                   +-----------------------------+
                                   | extractor_runner.py         |
+                                  | - validate_attachment_id()  |
+                                  | - --offline mode bypass     |
                                   +--------------+--------------+
                                                  |
                                    Safe Download / Path Resolve
@@ -78,8 +82,8 @@ When scrapers (Member 4) or administrators insert announcement documents, attach
 ```
 cybernaut-institute/pdf_extractor/
 │
-├── __init__.py                # Package initialization
-├── extractor_runner.py        # Main execution entry point (orchestrates batch processing)
+├── __init__.py                # Package initialization and clean __all__ public exports
+├── extractor_runner.py        # Main execution entry point & batch orchestrator
 ├── config.py                  # Environment settings, size limits, and validation
 ├── db_handler.py              # MySQL queries matching database/schema.sql
 ├── downloader.py              # Safe streaming downloader with SSRF protection
@@ -100,34 +104,57 @@ cybernaut-institute/pdf_extractor/
 │   ├── sample_password_protected.pdf        # Encrypted PDF
 │   └── sample_corrupted.pdf                 # Corrupted file stream
 │
-└── tests/                     # Automated test suite (pytest)
+└── tests/                     # Automated test suite (pytest - 34 tests)
     ├── __init__.py
     ├── conftest.py            # Shared fixtures
     ├── test_pdf_parser.py     # PDF parser unit tests (English, Tamil, mixed, empty, etc.)
     ├── test_downloader.py     # Downloader and SSRF security tests
     ├── test_db_handler.py     # Database handler unit tests with mocking
-    └── test_extractor_runner.py # Pipeline runner batch processing tests
+    └── test_extractor_runner.py # Pipeline runner batch processing & error handling tests
 ```
 
 ---
 
-## 4. System & Python Installation Requirements
+## 4. Key Recent Updates & Reliability Enhancements
 
-- **Python**: Version 3.10, 3.11, 3.12, 3.13, or 3.14.
-- **Operating System**: Windows 10/11, Linux, or macOS.
-- **MySQL**: MySQL 8.0 or later with `utf8mb4` character set support.
+1. **Independent Offline Mode (`--offline`)**:
+   - The `--offline` flag runs completely independent of MySQL: `conn = None`.
+   - Never calls `get_connection()` or attempts database validation.
+   - Outputs `Database connection: SKIPPED (offline mode)`.
+   - Works immediately even if no `.env` file exists and MySQL service is stopped.
+   - All connection objects and cleanup operations are safely guarded against `None`.
+
+2. **Resilient Attachment ID Validation (`validate_attachment_id`)**:
+   - Safely accepts integer IDs (`5`) and numeric string IDs (`"5"`, `" 5 "`).
+   - Safely rejects invalid types: `None`, `""`, `"abc"`, `"12abc"`, floats (`5.5`), and booleans (`True`, `False`).
+   - Logs a clear warning (`WARNING: Invalid attachment_id '<val>' in record. Skipping record.`).
+   - Marks invalid records as `Failed` in statistics without running database `UPDATE` statements.
+   - An invalid ID **never crashes the batch**; remaining valid records continue processing seamlessly.
+
+3. **Side-Effect-Free Package Exports (`__init__.__all__`)**:
+   - Cleanly exports public functions and types: `config`, `run_pipeline`, `process_single_attachment`, `validate_attachment_id`, `extract_pdf_text`, `clean_text`, `is_meaningful_text`, `ExtractionResult`, `download_or_get_pdf`, `cleanup_temp_file`, `get_connection`, `test_connection`, `fetch_pending_attachments`, `update_attachment_status`, and custom exception classes.
+   - Importing `pdf_extractor` has **zero side effects**: no database connection, no network socket, and no directory creation.
+   - Verified via: `python -c "import pdf_extractor as p; print(p.__all__)"`.
 
 ---
 
-## 5. Virtual Environment Creation
+## 5. System & Python Installation Requirements
 
-Open **Windows PowerShell** (or your preferred terminal) and navigate to the project directory:
+- **Python**: Version 3.10, 3.11, 3.12, 3.13, or 3.14.
+- **Operating System**: Windows 10/11, Linux, or macOS.
+- **MySQL**: MySQL 8.0 or later with `utf8mb4` character set support (for live mode).
+
+---
+
+## 6. Virtual Environment Creation
+
+Open **Windows PowerShell** (or terminal) and navigate to the module directory:
 
 ```powershell
 cd "d:\Cybernaut project\Cybernaut-Institute-\cybernaut-institute\pdf_extractor"
 ```
 
-Create a dedicated virtual environment:
+Create a virtual environment:
 
 ```powershell
 python -m venv venv
@@ -153,9 +180,9 @@ Activate the virtual environment:
 
 ---
 
-## 6. Dependency Installation
+## 7. Dependency Installation
 
-Install the tested dependencies:
+Install dependencies from `requirements.txt`:
 
 ```powershell
 pip install -r requirements.txt
@@ -163,150 +190,60 @@ pip install -r requirements.txt
 
 Installed packages:
 - `pdfplumber`: Primary high-fidelity PDF layout and text extraction.
-- `pypdf`: Fallback extraction engine and PDF structure inspector.
+- `pypdf`: Fallback extraction engine and PDF encryption inspector.
 - `requests`: HTTP/HTTPS streaming downloader.
 - `PyMySQL`: Native Python MySQL client supporting `utf8mb4`.
-- `python-dotenv`: Environment variable loader.
-- `pytest`: Automated unit and integration testing framework.
+- `python-dotenv`: Environment variable management.
+- `pytest`: Automated testing framework.
 
 ---
 
-## 7. Environment Configuration (`.env`)
+## 8. Offline Sample PDF Testing (No MySQL or `.env` Required)
 
-Copy `.env.example` to create your local `.env`:
-
-```powershell
-Copy-Item .env.example .env
-```
-
-Edit `.env` with your actual MySQL database credentials:
-
-```ini
-DB_HOST=localhost
-DB_PORT=3306
-DB_USER=root
-DB_PASSWORD=your_actual_mysql_password
-DB_NAME=college_announcements_db
-
-DOWNLOAD_TIMEOUT=30
-MAX_FILE_SIZE_MB=25
-TEMP_DIR=temp
-```
-
-> [!NOTE]
-> `.env` is automatically ignored by `.gitignore`. Never commit passwords or sensitive tokens to Git.
-
----
-
-## 8. MySQL Database Setup Requirements
-
-Ensure the database schema and seed data are imported per `database/SETUP_GUIDE.md`:
-
-```powershell
-mysql -u root -p < ..\database\schema.sql
-mysql -u root -p < ..\database\seed.sql
-```
-
-The pipeline interacts with the `attachments` table:
-- **`attachment_id`**: Integer primary key.
-- **`file_url`**: Remote URL (`http://...`, `https://...`) or local path.
-- **`file_type`**: Must be `PDF` or filename must end in `.pdf`.
-- **`extraction_status`**: Processed when `'Pending'`.
-- **`extracted_text`**: Populated with cleaned plain text.
-- **`extracted_at`**: Set to current timestamp (`NOW()`).
-
----
-
-## 9. Offline Sample PDF Testing (No MySQL Needed)
-
-You can test all sample PDFs (English, Tamil, Mixed, Scanned, Corrupted) directly **without requiring a running MySQL database**:
+You can run full extraction immediately without MySQL:
 
 ### Direct Sample Inspection:
 ```powershell
 python test_samples.py
 ```
 
-### Offline Pipeline Runner Mode:
+### Full Offline Extraction Runner:
 ```powershell
 python extractor_runner.py --offline
 ```
 
-This runs the full extraction lifecycle on local sample files and prints execution metrics.
-
----
-
-## 10. Running the Automated Test Suite (`pytest`)
-
-Execute all 31 unit and security tests:
-
-```powershell
-pytest tests/ -v
-```
-
-### Specific Test Modules:
-```powershell
-# Run only PDF parser tests (English, Tamil, page order, whitespace, fallbacks)
-pytest tests/test_pdf_parser.py -v
-
-# Run downloader & SSRF security tests
-pytest tests/test_downloader.py -v
-
-# Run database handler mock tests
-pytest tests/test_db_handler.py -v
-
-# Run runner batch processing tests
-pytest tests/test_extractor_runner.py -v
-```
-
-All unit tests execute with mock objects and **never require a running database server**.
-
----
-
-## 11. Running the Live Extraction Pipeline
-
-Once MySQL is running and `.env` is configured:
-
-```powershell
-python extractor_runner.py
-```
-
-### Optional CLI Arguments:
-- `--limit N`: Limit processing to the first `N` pending attachments (e.g., `python extractor_runner.py --limit 5`).
-- `--offline`: Run in local sample mode without connecting to MySQL.
-
----
-
-## 12. Expected Console Output
-
-```
+**Expected Offline Output:**
+```text
 ========================================
 COLLEGE ANNOUNCEMENT PDF EXTRACTOR
 ========================================
 
-Database connection: SUCCESS
+Database connection: SKIPPED (offline mode)
+
+Running in OFFLINE mode (using sample PDFs without MySQL)...
 
 Pending PDF attachments found: 4
 
 Processing attachment ID: 1
-File: exam_timetable.pdf
+File: sample_1_english_announcement.pdf
 Extraction: SUCCESS
-Pages: 2
+Pages: 1
 Status: Completed
 
 Processing attachment ID: 2
-File: circular_tamil.pdf
+File: sample_2_tamil_announcement.pdf
 Extraction: SUCCESS
 Pages: 1
 Status: Completed
 
 Processing attachment ID: 3
-File: scanned_notice.pdf
+File: sample_3_scanned_notice.pdf
 Extraction: NO TEXT
 Pages: 1
 Status: No Text
 
 Processing attachment ID: 4
-File: corrupted.pdf
+File: sample_corrupted.pdf
 Extraction: FAILED
 Pages: 0
 Status: Failed
@@ -325,53 +262,97 @@ Failed: 1
 
 ---
 
-## 13. Database Status Explanations
+## 9. Automated Testing Suite (`pytest`)
+
+Execute the complete automated test suite (34 tests):
+
+```powershell
+pytest tests/ -v
+```
+
+### Module Breakdown:
+```powershell
+# PDF parser tests (English, Tamil, order, whitespace, corrupt, password, scanned)
+pytest tests/test_pdf_parser.py -v
+
+# Downloader tests (SSRF, 404, timeout, size limit, magic bytes, local paths)
+pytest tests/test_downloader.py -v
+
+# Database handler tests (mocked transactions, UTF-8 MB4, SQL parameterization)
+pytest tests/test_db_handler.py -v
+
+# Runner & batch tests (offline bypass, invalid IDs, deduplication, error continuation)
+pytest tests/test_extractor_runner.py -v
+```
+
+All 34 tests run with mock objects and **never require a running MySQL database**.
+
+---
+
+## 10. Running with Live MySQL Database
+
+When ready to process live announcement records:
+
+1. **Start MySQL service**:
+   ```powershell
+   Start-Service MySQL80
+   ```
+
+2. **Configure `.env`**:
+   ```powershell
+   Copy-Item .env.example .env
+   ```
+   Set your database credentials:
+   ```ini
+   DB_HOST=localhost
+   DB_PORT=3306
+   DB_USER=root
+   DB_PASSWORD=your_actual_password
+   DB_NAME=college_announcements_db
+
+   DOWNLOAD_TIMEOUT=30
+   MAX_FILE_SIZE_MB=25
+   TEMP_DIR=temp
+   ```
+
+3. **Import database schema & seed data (if not already loaded)**:
+   ```powershell
+   mysql -u root -p < ..\database\schema.sql
+   mysql -u root -p < ..\database\seed.sql
+   ```
+
+4. **Run the extractor**:
+   ```powershell
+   python extractor_runner.py
+   ```
+
+   *(Optional: limit batch size with `--limit N`, e.g., `python extractor_runner.py --limit 5`)*.
+
+---
+
+## 11. Database Status Lifecycle
 
 | Status | Meaning | Action Taken in Database |
 | :--- | :--- | :--- |
-| **`Pending`** | Document queued for processing | Unprocessed, awaiting pipeline pickup. |
+| **`Pending`** | Queued for processing | Unprocessed, awaiting pipeline pickup. |
 | **`Completed`** | Text successfully extracted | `extracted_text = <cleaned_text>`, `extracted_at = NOW()` |
 | **`No Text`** | Valid PDF, but contains only images or scanned pages | `extracted_text = NULL`, `extracted_at = NOW()` |
-| **`Failed`** | Download failed, corrupted file, or encrypted with password | `extracted_text = NULL`, `extracted_at = NOW()` |
+| **`Failed`** | Network error, 404, corrupted, password-protected, or invalid ID | `extracted_text = NULL`, `extracted_at = NOW()` |
 
 ---
 
-## 14. Common Errors and Solutions
+## 12. Security Architecture
 
-1. **`Can't connect to MySQL server`**:
-   - Check if your MySQL service is started: `Start-Service MySQL80`.
-   - Verify `DB_HOST`, `DB_PORT`, `DB_USER`, and `DB_PASSWORD` in `.env`.
-   - To test pipeline logic without MySQL, run `python extractor_runner.py --offline`.
-
-2. **`SSRF violation: Host resolves to restricted IP`**:
-   - The pipeline blocks requests to `localhost`, `127.0.0.1`, and private IP ranges (`10.x`, `192.168.x`).
-   - If running local tests against a local test web server, set `ALLOW_PRIVATE_IPS=true` in `.env`.
-
-3. **`File exceeds maximum allowed size`**:
-   - The file exceeds `MAX_FILE_SIZE_MB` (default: 25 MB).
-   - Adjust `MAX_FILE_SIZE_MB` in `.env` if legitimate large documents must be parsed.
-
-4. **`Character encoding errors (UnicodeEncodeError / UnicodeDecodeError)`**:
-   - The database connection enforces `charset='utf8mb4'`. Ensure the MySQL server and tables use `utf8mb4_unicode_ci`.
+- **SSRF Protection**: Remote URLs are pre-resolved and verified against private, loopback, link-local, and cloud metadata CIDR blocks (`127.0.0.1`, `::1`, `10.0.0.0/8`, `172.16.0.0/12`, `192.168.0.0/16`, `169.254.169.254`). Every HTTP redirect target is individually re-validated before requesting.
+- **Resource Exhaustion Defense**: Chunked streaming (8 KB) terminates downloads immediately if bytes exceed `MAX_FILE_SIZE_MB`.
+- **Magic Byte Validation**: Validates initial `%PDF-` bytes to block spoofed HTML/scripts.
+- **SQL Injection Prevention**: All queries strictly utilize parameterized `%s` placeholders.
+- **Path Traversal Protection**: Enforces canonical path checks on local file inputs.
+- **Credential Safety**: Passwords reside solely in `.env`, which is ignored by `.gitignore`.
 
 ---
 
-## 15. Security Considerations
+## 13. Current Limitations
 
-- **SSRF Protection**: All remote URLs are validated using DNS address resolution prior to requesting content. Private networks, loopbacks, AWS metadata endpoints (`169.254.169.254`), and link-local destinations are rejected.
-- **Redirect Revalidation**: Each HTTP redirect is checked against the SSRF validator to prevent open-redirect exploits.
-- **Resource Exhaustion Defense**: Streaming download chunks with strict byte counters immediately aborts downloads exceeding `MAX_FILE_SIZE_MB`.
-- **Magic Bytes Validation**: Downloaded payloads are verified against standard `%PDF-` signature bytes before parser invocation, stopping malicious HTML/script payloads masquerading as PDFs.
-- **SQL Injection Prevention**: All queries in `db_handler.py` strictly utilize parameterized SQL statements (`%s` placeholders).
-- **Credential Protection**: Passwords are read solely from environment variables and never logged or printed.
-- **Path Traversal Protection**: Local files and temp file paths are resolved to canonical absolute paths and checked for containment.
-
----
-
-## 16. Current Limitations
-
-1. **No Optical Character Recognition (OCR)**:
-   - In accordance with project specifications, OCR engines (such as Tesseract) are not included.
-   - PDFs composed purely of scanned raster images will be accurately classified as **`No Text`**.
-2. **Password Protected PDFs**:
-   - Encrypted PDFs requiring user authentication passwords cannot be decrypted and will be classified as **`Failed`**.
+1. **No Optical Character Recognition (OCR)**: Per project specifications, OCR engines (such as Tesseract) are not included. Scanned documents without a text layer are accurately classified as **`No Text`**.
+2. **Encrypted PDFs**: Documents protected by user passwords cannot be decrypted and are classified as **`Failed`**.
